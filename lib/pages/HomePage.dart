@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/pages/Playlists.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -157,14 +158,21 @@ class _HomePageState extends State<HomePage> {
                     final date = event['date'];
                     final subject = event['subject'];
 
-                    return Card(
-                      child: ListTile(
-                        leading: Image.asset(
-                          "assets/images/$avatar.jpg",
+                    return InkWell(
+                      onTap: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Playlists(),
+                        ))
+                      },
+                      child: Card(
+                        child: ListTile(
+                          leading: Image.asset(
+                            "assets/images/$avatar.jpg",
+                          ),
+                          title: Text("$speaker ($date)"),
+                          subtitle: Text("$subject"),
+                          trailing: Icon(Icons.info),
                         ),
-                        title: Text("$speaker ($date)"),
-                        subtitle: Text("$subject"),
-                        trailing: Icon(Icons.info),
                       ),
                     );
                   },
