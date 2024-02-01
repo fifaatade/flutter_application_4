@@ -10,14 +10,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _currentIndex = 0;
-  List<Image> images = [
-    Image.asset("assets/images/img1.jpg"),
-    Image.asset("assets/images/img2.jpg"),
-    Image.asset("assets/images/img3.jpg"),
-    Image.asset("assets/images/img4.jpg"),
-    Image.asset("assets/images/img5.jpg"),
+  int selectedIndex = 0;
+  List<String> images = [
+    "assets/images/img1.jpg",
+    "assets/images/img2.jpg",
+    "assets/images/img3.jpg",
+    "assets/images/img4.jpg",
+    "assets/images/img5.jpg",
   ];
-    final events = [
+  final events = [
     {
       "speaker": "Lior chamla",
       "date": "13H à 13:30",
@@ -48,14 +49,14 @@ class _HomePageState extends State<HomePage> {
               TextSpan(
                 text: "Hello, ",
                 style: TextStyle(
-                  fontSize: 50,
+                  fontSize: 35,
                   color: Colors.white,
                 ),
               ),
               TextSpan(
                 text: "Robert",
                 style: TextStyle(
-                  fontSize: 50,
+                  fontSize: 35,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -64,26 +65,89 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: images.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: Color.fromARGB(255, 24, 24, 24),
-                    padding: EdgeInsets.all(20),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: images[index],
-                    ),
-                  );
-                },
-              )),
-
-              Expanded(
+      body: Container(
+        color: Color.fromARGB(255, 24, 24, 24),
+        child: Column(
+          children: [
+            Container(
+              height: 270,
+              child: Row(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: ListView.builder(
+                        reverse: true,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                bottom:
+                                    10.0), // Add padding around the ListTile.
+                            child: ListTile(
+                              // Set the selectedTileColor and tileColor based on the selectedIndex.
+                              selected: index == selectedIndex,
+                              selectedTileColor: Colors.red,
+                              tileColor: Colors.white,
+                              onTap: () {
+                                // Update the selectedIndex when the ListTile is tapped.
+                                setState(() {
+                                  selectedIndex = index;
+                                });
+                              },
+                              title: Center(
+                                child: RotatedBox(
+                                  quarterTurns:
+                                      3, // Rotate the text 270 degrees for vertical orientation.
+                                  child: Text(
+                                    index == 0
+                                        ? 'Top'
+                                        : (index == 1 ? 'New' : 'Recomment'),
+                                    style: TextStyle(
+                                      fontSize:
+                                          16.0, // Adjust font size as needed.
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                  Expanded(
+                      flex: 6,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Color.fromARGB(255, 24, 24, 24),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.asset(
+                                images[index],
+                                fit: BoxFit.cover,
+                                width: 250,
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
                 child: ListView.builder(
                   itemCount: events.length,
                   itemBuilder: (context, index) {
@@ -105,10 +169,10 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-                )
-              
-        ],
-        
+              ),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
