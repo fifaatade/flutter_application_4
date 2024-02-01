@@ -75,19 +75,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: ListView.builder(
-                        reverse: true,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                bottom:
-                                    10.0), // Add padding around the ListTile.
-                            child: ListTile(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 25.0),
+                        child: ListView.builder(
+                          reverse: true,
+                          itemCount: 3,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              contentPadding: EdgeInsets.only(right: 20.0),
                               // Set the selectedTileColor and tileColor based on the selectedIndex.
                               selected: index == selectedIndex,
-                              selectedTileColor: Colors.red,
-                              tileColor: Colors.white,
+                              // selectedTileColor: Colors.white,
+                              ///  tileColor: Colors.black,
+
                               onTap: () {
                                 // Update the selectedIndex when the ListTile is tapped.
                                 setState(() {
@@ -98,20 +98,36 @@ class _HomePageState extends State<HomePage> {
                                 child: RotatedBox(
                                   quarterTurns:
                                       3, // Rotate the text 270 degrees for vertical orientation.
-                                  child: Text(
-                                    index == 0
-                                        ? 'Top'
-                                        : (index == 1 ? 'New' : 'Recomment'),
-                                    style: TextStyle(
-                                      fontSize:
-                                          16.0, // Adjust font size as needed.
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                          top: BorderSide(
+                                              width: 2,
+                                              color: index == selectedIndex
+                                                  ? const Color.fromARGB(
+                                                      255, 239, 83, 80)
+                                                  : Colors.transparent)),
+                                    ),
+                                    child: Text(
+                                      index == 0
+                                          ? 'Top'
+                                          : (index == 1 ? 'New' : 'Recomment'),
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: index == selectedIndex
+                                            ? const Color.fromARGB(
+                                                211, 239, 83, 80)
+                                            : Colors
+                                                .white, // Adjust font size as needed.
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       )),
                   Expanded(
                       flex: 6,
