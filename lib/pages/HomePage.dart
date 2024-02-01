@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromARGB(235, 255, 255, 255),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -174,6 +174,7 @@ class _HomePageState extends State<HomePage> {
                     final subject = event['subject'];
 
                     return Card(
+                      elevation: 0,
                       child: ListTile(
                         leading: Image.asset(
                           "assets/images/$avatar.jpg",
