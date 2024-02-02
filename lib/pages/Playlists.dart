@@ -25,32 +25,42 @@ class Playlists extends StatelessWidget {
           child: Icon(Icons.more_vert),
         )],
       ),
-      body: Container(
-        child: Column(children: [
-          Expanded(
-            flex: 6,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  color: Color.fromARGB(255, 24, 24, 24),
-                  padding: EdgeInsets.symmetric(
-                      vertical: 20, horizontal: 10.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      images[index],
-                      fit: BoxFit.cover,
-                      width: 350,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(children: [
+            Expanded(
+              flex: 6,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: images.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    color: Color.fromARGB(255, 24, 24, 24),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        images[index],
+                        fit: BoxFit.cover,
+                        width: 350,
+                      ),
                     ),
-                  ),
-                );
-              },
-            )),
-        ]),
+                  );
+                },
+              )),
+              Expanded(child: Container(child:
+                Column(children: [
+                  Text('Marmalade',style: TextStyle(fontSize:30,fontWeight: FontWeight.bold, color: Colors.black ),),
+                  Text('Miyagi & Andy Panda, Mav-d', style: TextStyle(fontSize: 15,color: Colors.grey),)
+                ],)
+              ))
+          ]),
+        
+        ),
       ),
+      
     );
   }
 }
