@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           title: Text("$speaker ($date)"),
                           subtitle: Text("$subject"),
-                          trailing: Icon(Icons.info),
+                          trailing: Icon(Icons.graphic_eq),
                         ),
                       ),
                     );
