@@ -110,12 +110,12 @@ class Playlists extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '10:00',
+                          '01:08',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 11),
                         ),
                         Text(
-                          '  3:00',
+                          '04:15',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 11),
                         )
