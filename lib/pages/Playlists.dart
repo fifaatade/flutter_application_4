@@ -91,10 +91,14 @@ class Playlists extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                Image.asset(
-                  "assets/images/equalizer.png",
-                  height: 50,
-                  width: 50,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: Image.asset(
+                    "assets/images/equalizer.png",
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                  ),
                 ),
                 SizedBox(
                   height: 5,
