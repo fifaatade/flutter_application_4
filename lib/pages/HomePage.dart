@@ -163,56 +163,87 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(15),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
-                ),
-                child: ListView.builder(
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    final event = events[index];
-                    final avatar = event['avatar'];
-                    final speaker = event['speaker'];
-                    final duree = event['duree'];
-                    final subject = event['subject'];
-
-                    return InkWell(
-                      onTap: () => {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Playlists(),
-                        ))
-                      },
-                      child: Card(
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: Image.asset(
-                            "assets/images/$avatar.jpg",
-                          ),
-                          title: Row(
-                            children: [
-                              Text("$speaker",
-                                  style: TextStyle(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Playlists",
+                                    style: TextStyle(
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("$duree"),
-                              )
-                            ],
-                          ),
-                          subtitle: Text("$subject"),
-                          trailing: Icon(Icons.graphic_eq),
+                                      color: Colors.black,
+                                    )),
+                                Text("See all",
+                                    style: TextStyle(color: Colors.red))
+                              ]),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
+                        ...events
+                            .map((e) => InkWell(
+                                  onTap: () => {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => Playlists(),
+                                    ))
+                                  },
+                                  child: Card(
+                                    elevation: 0,
+                                    color: Colors.white,
+                                    child: ListTile(
+                                      leading: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          "assets/images/${e['avatar']}.jpg",
+                                          width: 60,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text("${e['speaker']}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18)),
+                                              Text(
+                                                "${e['subject']}",
+                                                style: TextStyle(fontSize: 13),
+                                              )
+                                            ],
+                                          ),
+                                          Text(
+                                            "${e['duree']}",
+                                            style: TextStyle(fontSize: 13),
+                                          )
+                                        ],
+                                      ),
+                                      trailing: Icon(Icons.graphic_eq),
+                                    ),
+                                  ),
+                                ))
+                            .toList()
+                      ]),
+                    ),
+                  )),
+            ),
           ],
         ),
       ),

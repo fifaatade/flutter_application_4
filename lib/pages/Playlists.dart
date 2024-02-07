@@ -34,19 +34,31 @@ class Playlists extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Container(
-                          height: 250,
+                          height: 350,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(children: [
                               ...images
                                   .map((e) => Container(
                                         padding: EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 10.0),
+                                            vertical: 20, horizontal: 10.0),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(30),
-                                          child: Card(
-                                            elevation: 6,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: const Color.fromARGB(
+                                                          130, 0, 0, 0)
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 10,
+                                                  offset: Offset(2, 2),
+                                                  spreadRadius: 12,
+                                                  blurStyle: BlurStyle.inner,
+                                                ),
+                                              ],
+                                            ),
                                             child: Image.asset(
                                               e,
                                               fit: BoxFit.cover,
@@ -58,9 +70,7 @@ class Playlists extends StatelessWidget {
                                       ))
                                   .toList(),
                             ]),
-                          )
-                        )
-                    ),
+                          ))),
                 ],
               ),
             ),
