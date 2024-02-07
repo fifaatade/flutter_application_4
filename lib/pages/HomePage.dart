@@ -21,22 +21,28 @@ class _HomePageState extends State<HomePage> {
   ];
   final events = [
     {
-      "speaker": "Lior chamla",
-      "date": "13H à 13:30",
-      "subject": "Le code legacy",
+      "speaker": "Atlant",
+      "duree": "3:07",
+      "subject": "Miyagi & Andy Panda",
       "avatar": "image1"
     },
     {
-      "speaker": "Damien Cavailles",
-      "date": "17H30 à 18",
-      "subject": "git blame --no-offense",
-      "avatar": "image1"
+      "speaker": "Babel",
+      "duree": "2:30",
+      "subject": "Otnicka",
+      "avatar": "img3"
     },
     {
-      "speaker": "Defend Intelligence",
-      "date": "18H à 18:30",
-      "subject": "A la découverte des ia generatif",
+      "speaker": "Survive",
+      "duree": "5:02",
+      "subject": "Lane 8, Channy Leaneagh",
       "avatar": "image1",
+    },
+    {
+      "speaker": "Bass Drop",
+      "duree": "2:30",
+      "subject": "The Fullxaos",
+      "avatar": "img3",
     },
   ];
   @override
@@ -120,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                             ? const Color.fromARGB(
                                                 211, 239, 83, 80)
                                             : Colors
-                                                .white, // Adjust font size as needed.
+                                                .grey, // Adjust font size as needed.
                                       ),
                                     ),
                                   ),
@@ -157,46 +163,55 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(235, 255, 255, 255),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
+                padding: const EdgeInsets.all(15),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                  child: Column(children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Playlists",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              )),
-                          Text("See all", style: TextStyle(color: Colors.red))
-                        ]),
-                    ...events
-                        .map((e) => InkWell(
-                              onTap: () => {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Playlists(),
-                                ))
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  leading: Image.asset(
-                                    "assets/images/${e['avatar']}.jpg",
-                                  ),
-                                  title: Text("${e['speaker']} (${e['date']})"),
-                                  subtitle: Text("${e['subject']}"),
-                                  trailing: Icon(Icons.graphic_eq),
-                                ),
-                              ),
-                            ))
-                        .toList()
-                  ])),
+                ),
+                child: ListView.builder(
+                  itemCount: events.length,
+                  itemBuilder: (context, index) {
+                    final event = events[index];
+                    final avatar = event['avatar'];
+                    final speaker = event['speaker'];
+                    final duree = event['duree'];
+                    final subject = event['subject'];
+
+                    return InkWell(
+                      onTap: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Playlists(),
+                        ))
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Image.asset(
+                            "assets/images/$avatar.jpg",
+                          ),
+                          title: Row(
+                            children: [
+                              Text("$speaker",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("$duree"),
+                              )
+                            ],
+                          ),
+                          subtitle: Text("$subject"),
+                          trailing: Icon(Icons.graphic_eq),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             )
           ],
         ),
