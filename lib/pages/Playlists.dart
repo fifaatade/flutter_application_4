@@ -91,7 +91,11 @@ class Playlists extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                Icon(Icons.graphic_eq_rounded),
+                Image.asset(
+                  "assets/images/equalizer.png",
+                  height: 50,
+                  width: 50,
+                ),
                 SizedBox(
                   height: 5,
                 ),
