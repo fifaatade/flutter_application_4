@@ -41,7 +41,7 @@ class Playlists extends StatelessWidget {
                               ...images
                                   .map((e) => Container(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 20, horizontal: 10.0),
+                                        vertical: 20, horizontal: 10.0),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -58,7 +58,9 @@ class Playlists extends StatelessWidget {
                                       ))
                                   .toList(),
                             ]),
-                          ))),
+                          )
+                        )
+                    ),
                 ],
               ),
             ),
