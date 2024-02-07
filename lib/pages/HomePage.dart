@@ -157,43 +157,46 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(15),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(235, 255, 255, 255),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(235, 255, 255, 255),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
-                ),
-                child: ListView.builder(
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    final event = events[index];
-                    final avatar = event['avatar'];
-                    final speaker = event['speaker'];
-                    final date = event['date'];
-                    final subject = event['subject'];
-
-                    return InkWell(
-                      onTap: () => {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Playlists(),
-                        ))
-                      },
-                      child: Card(
-                        child: ListTile(
-                          leading: Image.asset(
-                            "assets/images/$avatar.jpg",
-                          ),
-                          title: Text("$speaker ($date)"),
-                          subtitle: Text("$subject"),
-                          trailing: Icon(Icons.graphic_eq),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                  child: Column(children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Playlists",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          Text("See all", style: TextStyle(color: Colors.red))
+                        ]),
+                    ...events
+                        .map((e) => InkWell(
+                              onTap: () => {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Playlists(),
+                                ))
+                              },
+                              child: Card(
+                                child: ListTile(
+                                  leading: Image.asset(
+                                    "assets/images/${e['avatar']}.jpg",
+                                  ),
+                                  title: Text("${e['speaker']} (${e['date']})"),
+                                  subtitle: Text("${e['subject']}"),
+                                  trailing: Icon(Icons.graphic_eq),
+                                ),
+                              ),
+                            ))
+                        .toList()
+                  ])),
             )
           ],
         ),
