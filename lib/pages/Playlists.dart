@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
-class Playlists extends StatelessWidget {
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:flutter/rendering.dart';
+
+
+class Playlists extends StatefulWidget {
   const Playlists({super.key});
 
+  @override
+  State<Playlists> createState() => _PlaylistsState();
+}
+
+class _PlaylistsState extends State<Playlists> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     List<String> images = [
@@ -12,6 +23,64 @@ class Playlists extends StatelessWidget {
       "assets/images/img4.jpg",
       "assets/images/img5.jpg",
     ];
+
+    final autoSizeGroup = AutoSizeGroup();
+    var _bottomNavIndex = 0; //default index of a first screen
+
+    late AnimationController _fabAnimationController;
+    late AnimationController _borderRadiusAnimationController;
+    late Animation<double> fabAnimation;
+    late Animation<double> borderRadiusAnimation;
+    late CurvedAnimation fabCurve;
+    late CurvedAnimation borderRadiusCurve;
+    late AnimationController _hideBottomBarAnimationController;
+
+    final iconList = <IconData>[
+      Icons.replay,
+      Icons.fast_rewind,
+      Icons.fast_forward,
+      Icons.favorite,
+    ];
+    @override
+    void initState() {
+      super.initState();
+
+      _fabAnimationController = AnimationController(
+        duration: Duration(milliseconds: 500),
+        vsync: this,
+      );
+      _borderRadiusAnimationController = AnimationController(
+        duration: Duration(milliseconds: 500),
+        vsync: this,
+      );
+      fabCurve = CurvedAnimation(
+        parent: _fabAnimationController,
+        curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+      );
+      borderRadiusCurve = CurvedAnimation(
+        parent: _borderRadiusAnimationController,
+        curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+      );
+
+      fabAnimation = Tween<double>(begin: 0, end: 1).animate(fabCurve);
+      borderRadiusAnimation = Tween<double>(begin: 0, end: 1).animate(
+        borderRadiusCurve,
+      );
+
+      _hideBottomBarAnimationController = AnimationController(
+        duration: Duration(milliseconds: 200),
+        vsync: this,
+      );
+
+      Future.delayed(
+        Duration(seconds: 1),
+        () => _fabAnimationController.forward(),
+      );
+      Future.delayed(
+        Duration(seconds: 1),
+        () => _borderRadiusAnimationController.forward(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -34,7 +103,7 @@ class Playlists extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Container(
-                          height: 350,
+                          height: 400,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(children: [
@@ -50,11 +119,10 @@ class Playlists extends StatelessWidget {
                                               boxShadow: [
                                                 BoxShadow(
                                                   color: const Color.fromARGB(
-                                                          130, 0, 0, 0)
-                                                      .withOpacity(0.3),
-                                                  blurRadius: 10,
-                                                  offset: Offset(2, 2),
-                                                  spreadRadius: 12,
+                                                      130, 0, 0, 0),
+                                                  blurRadius: 40,
+                                                  offset: Offset(10, 40),
+                                                  spreadRadius: 40,
                                                   blurStyle: BlurStyle.inner,
                                                 ),
                                               ],
@@ -62,8 +130,8 @@ class Playlists extends StatelessWidget {
                                             child: Image.asset(
                                               e,
                                               fit: BoxFit.cover,
-                                              width: 250,
-                                              height: 250,
+                                              width: 370,
+                                              height: 400,
                                             ),
                                           ),
                                         ),
@@ -77,10 +145,13 @@ class Playlists extends StatelessWidget {
             Container(
                 child: Column(
               children: [
+                SizedBox(
+                  height: 60,
+                ),
                 Text(
                   'Marmalade',
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 40,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -89,19 +160,17 @@ class Playlists extends StatelessWidget {
                   style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   child: Image.asset(
                     "assets/images/equalizer.png",
-                    height: 50,
+                    height: 100,
+                    fit: BoxFit.cover,
                     width: MediaQuery.of(context).size.width,
                   ),
-                ),
-                SizedBox(
-                  height: 5,
                 ),
                 Padding(
                   padding:
@@ -126,6 +195,35 @@ class Playlists extends StatelessWidget {
           ]),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+          shape: CircleBorder(),       
+          child: Icon(
+          Icons.pause,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          _fabAnimationController.reset();
+          _borderRadiusAnimationController.reset();
+          _borderRadiusAnimationController.forward();
+          _fabAnimationController.forward();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        height: 90,
+        backgroundColor: Colors.black,
+        icons: iconList,
+        activeColor: Colors.red,
+        inactiveColor: Colors.white,
+        activeIndex: _bottomNavIndex,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.verySmoothEdge,
+        leftCornerRadius: 32,
+        rightCornerRadius: 32,
+        onTap: (index) => setState(() => _bottomNavIndex = index),
+        
+        ),
     );
   }
 }

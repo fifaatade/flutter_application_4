@@ -44,6 +44,30 @@ class _HomePageState extends State<HomePage> {
       "subject": "The Fullxaos",
       "avatar": "img3",
     },
+    {
+      "speaker": "Atlant",
+      "duree": "3:07",
+      "subject": "Miyagi & Andy Panda",
+      "avatar": "image1"
+    },
+    {
+      "speaker": "Babel",
+      "duree": "2:30",
+      "subject": "Otnicka",
+      "avatar": "img3"
+    },
+    {
+      "speaker": "Survive",
+      "duree": "5:02",
+      "subject": "Lane 8, Channy Leaneagh",
+      "avatar": "image1",
+    },
+    {
+      "speaker": "Bass Drop",
+      "duree": "2:30",
+      "subject": "The Fullxaos",
+      "avatar": "img3",
+    },
   ];
   @override
   Widget build(BuildContext context) {
